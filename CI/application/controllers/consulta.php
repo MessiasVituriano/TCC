@@ -12,20 +12,37 @@ class Consulta extends CI_Controller {
       $this->load->library('session');
 
 
-        if($this->session->userdata('tipo') == 'V'){
-          print_r($this->session->all_userdata());
-        }else{
-            redirect('login');
+        if(!$this->session->userdata('logado')){
+          redirect('login');
         }
+        
     }
 
-    public function index(){    
-      $this->load->view('consulta');
+    public function index()
+    {   
+        $dados['consultas'] = $this->consultaModel->get_consulta();
+        $this->load->view('consulta', $dados);
     }
  
-	 
-  	public function inserir()
+    public function pesquisa()
+    {
+        $this->form_validation->set_rules('pesquisa','PESQUISA','required');
+        
 
+        $pesquisa = $this->input->post('pesquisa');
+
+        $dados['consultas'] = $this->consultaModel->search_consulta($pesquisa);
+        $this->load->view('consulta', $dados);
+    }
+
+    public function visualizar()
+    {
+        $id = $this->uri->segment(3);
+        $dados['consultas'] = $this->consultaModel->get_consulta_id($id);
+        $this->load->view('visualizarConsulta', $dados);
+    }
+
+  	public function cadastro()
 	  {                                        
         $this->form_validation->set_rules('nomeAnimal','NOME','required');
         $this->form_validation->set_rules('idade','IDADE','required|is_numeric');
@@ -70,7 +87,7 @@ class Consulta extends CI_Controller {
         $this->consultaModel->cadastrar($data_prop, $data_animal,$data_consulta);
         endif;
 
-        $this->load->view('consulta');
+        $this->load->view('cadastroConsulta');
   
     }    
 }

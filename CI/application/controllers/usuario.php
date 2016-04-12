@@ -10,9 +10,11 @@ class Usuario extends CI_Controller{
     $this->load->library('form_validation');
     $this->load->library('session');
 
-    if($this->session->userdata('logado')){
-      print_r($this->session->all_userdata());
-    }
+    echo "".$this->session->userdata('tipo');
+
+/*    if(!$this->session->userdata('logado')){
+      redirect('login');
+    }*/
   }
 
   public function index(){ 
@@ -80,7 +82,7 @@ class Usuario extends CI_Controller{
 
 
 
-  public function insert(){
+  public function cadastro(){
 
     $this->form_validation->set_rules('nome_usuario', 'NOME USUÁRIO', 'required|is_unique[usuario.nome_usuario]');
     $this->form_validation->set_rules('nome_completo', 'NOME COMPLETO', 'required');
@@ -132,12 +134,13 @@ class Usuario extends CI_Controller{
     redirect('usuario');
 
     endif;
-    $this->load->view('cadastro');
+    $this->load->view('cadastroUsuario');
   }
 
-  public function show(){       
+  public function visualizarUsuario(){       
     $id = $this->uri->segment(3);
     $dados['usuarios'] = $this->UsuarioModel->get_usuarios_id($id);
+    $this->load->view('visualizarUsuario', $dados);
   }
 
 
@@ -147,47 +150,62 @@ class Usuario extends CI_Controller{
     redirect('usuario');
   }
 
+ 
+  public function pesquisa()
+  {
+      $this->form_validation->set_rules('pesquisa','PESQUISA','required');
+      
+
+      $pesquisa = $this->input->post('pesquisa');
+
+      $dados['usuarios'] = $this->UsuarioModel->search_usuario($pesquisa);
+      $this->load->view('usuario', $dados);
+  }
+
+
   public function login()
   {  
     $this->form_validation->set_rules('nome_usuario','NOME','required');
     $this->form_validation->set_rules('senha','SENHA','required');
 
     if($this->form_validation->run() == TRUE){
-    
-    $nome_usuario = $this->input->post('nome_usuario');
-    $senha = $this->input->post('senha');
-    $usuario = $this->UsuarioModel->login($nome_usuario, $senha);
-    
-    if($usuario){
-      $dados = array(
-        'nome_completo' => $usuario[0]->nome_completo,
-        'nome_usuario' => $usuario[0]->nome_usuario,
-        'tipo' => $usuario[0]->tipo,
-        'cpf' => $usuario[0]->cpf,
-        'logado' => TRUE
-        );
-      $this->session->set_userdata($dados);
-      $dados1 = array("mensagem" => $usuario[0]->nome_completo);
-      switch ($usuario[0]->tipo) {
-        case 'V':
+
+      $nome_usuario = $this->input->post('nome_usuario');
+      $senha = $this->input->post('senha');
+      $usuario = $this->UsuarioModel->login($nome_usuario, $senha);
+
+      if($usuario){
+        $dados = array(
+          'nome_completo' => $usuario[0]->nome_completo,
+          'nome_usuario' => $usuario[0]->nome_usuario,
+          'tipo' => $usuario[0]->tipo,
+          'cpf' => $usuario[0]->cpf,
+          'logado' => TRUE
+          );
+
+        $this->session->set_userdata($dados);
+        switch ($usuario[0]->tipo){
+          case 'V':
           redirect('consulta');
-        break;
-        case 'D':
+          break;
+          case 'D':
           redirect('usuario');
-        break;
-        case 'T':
+          break;
+          case 'T':
           redirect('exame');
-        break;
-        case 'S':
+          break;
+          case 'S':
           redirect('consulta');
-        break;
+          break;
+          default:
+          $this->load->view('login');
+          break;
+        }
       }
-    }
     }else{
       $this->load->view('login');
     }
   }
-
 
   public function logout() {
     $dados = array(
@@ -196,11 +214,11 @@ class Usuario extends CI_Controller{
       'tipo' => '',
       'cpf' => '',
       'logado' => FALSE
-    );
+      );
 
     $this->session->unset_userdata($dados);
-    //$this->session->sess_destroy();
-    $dados1 = array("mensagem" => "Logout!");
+    $this->session->sess_destroy();
+    $dados1 = array("mensagem" => $this->session->userdata('nome_usuario'));
     $this->load->view('login', $dados1);
   }
 }

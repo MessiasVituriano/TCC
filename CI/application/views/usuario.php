@@ -24,21 +24,37 @@ $this->load->view('includes/header.php');
       <div class="row z-depth-2">
         <div class="col m10 offset-m1 s12">
         <h1 class="center-align ">Usu&aacute;rios</h1>
-                <table class = "striped responsive-table centered">
+        <?php echo form_open('usuario/pesquisa'); ?>
+
+        <div class="row">
+          <div class="input-field col s11">
+            <label for="pesquisa">Pesquisa</label>
+            <?php echo form_input('pesquisa', '', 'class = "validate"') ?>
+            <?php echo form_error('pesquisa') ?>
+          </div>
+           <div class = "input-field col s1">
+              <a class="btn-floating" href=<?php echo base_url().'usuario/pesquisa';?>><i class="material-icons right">search</i></a>
+          </div>        
+        </div>
+        <?php echo form_close(); ?>
+
+        <table class = "striped responsive-table centered">
         <thead>
           <tr>
               <th data-field="nome_completo">Nome completo</th>
               <th data-field="nome_usuario">Nome usu&aacute;rio</th>
               <th data-field="tipo">Tipo</th>
+              <th data-field="visualizar">Visualizar</th>
               <th data-field="atualizar">Editar</th>
               <th data-field="delete">Excluir</th>
           </tr>
         </thead>
         <tbody>
+        <?php if(isset($usuarios)): ?>        
         <?php foreach ($usuarios as $usuario) : ?>
           <tr>
-            <td><?php echo $usuario->nome_completo ?></td>
-            <td><?php echo $usuario->nome_usuario ?></td>
+            <td><?php echo $usuario->nome_completo?></td>
+            <td><?php echo $usuario->nome_usuario?></td>
             <td><?php switch ($usuario->tipo) {
                 case 'V':
                     echo "Veterin&aacute;rio";
@@ -54,15 +70,17 @@ $this->load->view('includes/header.php');
                 }
                 ?>
             </td>
+            <td><a href=<?php echo base_url().'usuario/visualizarUsuario/'.$usuario->id;?>><i class="material-icons">visibility</i></a></td>
             <td><a href=<?php echo base_url().'usuario/update_usuario/'.$usuario->id;?>><i class="material-icons">edit</i></a></td>
             <td><a  href=<?php echo base_url().'usuario/delete/'.$usuario->id;?> onclick="return confirm('Remover usuario?');"><i class="material-icons">delete</i></a></td>
           </tr>
         <?php endforeach; ?>
+      <?php endif; ?>
         </table>
        </div>
       <div class = "row">
          <div class = "center-align col s12">
-            <a class="waves-effect waves-light btn" href=<?php echo base_url().'usuario/insert';?>><i class="material-icons right">add</i>Inserir usu&aacute;rio</a>
+            <a class="waves-effect waves-light btn" href=<?php echo base_url().'usuario/cadastro';?>><i class="material-icons right">add</i>Cadastrar usu&aacute;rio</a>
           </div>
         </div>        
     </div>

@@ -5,10 +5,6 @@
             parent::__constuct();
             $this->load->database();
 		}
-
-		public function inserir(){
-			return $this->db->insert('usuario', $this);
-		}
  		
  		public function insert_usuario($data_usuario, $data_contato, $data_endereco){
 		    $this->db->insert('usuario', $data_usuario);
@@ -49,9 +45,22 @@
 			
 		}
 
+		//Fazer depois
+	    public function search_usuario($pesquisa)
+	    {
+
+			$this->db->select("usuario.*, contato.*, endereco.*");
+			$this->db->from('usuario');
+	        $this->db->like('usuario.nome_usuario', $pesquisa);
+			$this->db->join('contato', 'contato.id = usuario.id');
+			$this->db->join('endereco', 'endereco.id = usuario.id');
+	        $query = $this->db->get();
+	        return $query->result();
+	    }
+
 		public function login($nome_usuario, $senha){
 		$this->db->select('*');
-		$this->db-> from('usuario');
+		$this->db->from('usuario');
 	    $this->db->where('nome_usuario', $nome_usuario);
 	    $this->db->where('senha', MD5($senha));
 	    $this->db->limit(1);
