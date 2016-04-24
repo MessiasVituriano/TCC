@@ -11,7 +11,7 @@ $this->load->view('includes/nav.php');
       </div>
 
 
-<?php echo form_open('exame/cavitario'); ?>
+<?php echo form_open('exame/cavitario/'.$this->uri->segment(3)); ?>
 
 <?php foreach ($consultas as $consulta) : ?>
   <div class="row">
@@ -85,8 +85,8 @@ $this->load->view('includes/nav.php');
         <input name = "aspecto" type="radio" id="T" value = "T"/>
         <label for="T">Turva</label>
     </div>
-    <?php echo form_error('aspecto'); ?>
   </div>
+    <?php echo form_error('aspecto'); ?>
 
   <div class="row">
     <div class="input-field col s3">
@@ -99,8 +99,8 @@ $this->load->view('includes/nav.php');
     <div class="input-field col s3">
         <input name = "coagulacao" type="radio" id="A" value = "A"/>
         <label for="A">Aus&ecirc;ncia</label>
-    <?php echo form_error('coagulacao'); ?>
     </div>
+    <?php echo form_error('coagulacao'); ?>
     <div class="input-field col s3">
       <label for = 'pH'>pH</label>
       <?php echo form_input('pH','', 'class = validate') ?>

@@ -11,7 +11,7 @@ $this->load->view('includes/nav.php');
         <h4 class = "center-align">Editar usu&aacute;rio</h4>
       </div>
 
-<?php echo form_open('usuario/update_usuario'); ?>
+<?php echo form_open('usuario/update_usuario/'.$this->uri->segment(3)); ?>
     <?php foreach ($usuarios as $usuario) : ?>
 
 	<?php echo form_hidden('id', $this->uri->segment(3)) ?>

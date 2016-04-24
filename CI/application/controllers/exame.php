@@ -43,7 +43,6 @@ class Exame extends CI_Controller {
 
 
         if($this->form_validation->run() == TRUE):
-		
 		$data_exame = array(
 			'id_consulta'  => $this->input->post('id_consulta'),
 			'volume' => $this->input->post('volume'),
@@ -289,66 +288,54 @@ class Exame extends CI_Controller {
    		$this->load->view('hemograma', $dados);
 	}
 
-	public function dermatologico()
+public function dermatologico(){
+
+		$this->form_validation->set_rules('data_inicio', 'DATA INICIO', 'required');
+		$this->form_validation->set_rules('duracao', 'DURACAO', 'required|is_numeric');
+		$this->form_validation->set_rules('sinais', 'SINAIS', 'required');
+		$this->form_validation->set_rules('progressao', 'PROGRESSAO', 'required');
+		$this->form_validation->set_rules('variacao_sazonal', 'VARIACAO SAZONAL', 'required');
+		$this->form_validation->set_rules('tratamento', 'TRATAMENTO', 'required');
+		$this->form_validation->set_rules('ambiente', 'AMBIENTE', 'required');
+		$this->form_validation->set_rules('contactantes', 'CONTACTANTES', 'required');
+		$this->form_validation->set_rules('diagnostico', 'DIAGNOSTICO', 'required');
+
+      	$this->form_validation->set_rules('userfile', 'IMAGEM', 'callback_do_upload');
+	    
+	    if($this->form_validation->run() == TRUE){
+	    	$data_exame = array(
+	    		'id_consulta' => $this->input->post('id_consulta'),
+	    		'data_inicio' => $this->input->post('data_inicio'), 
+	    		'duracao' => $this->input->post('duracao'),
+	    		'sinais'  => $this->input->post('sinais'),
+	    		'progressao'  => $this->input->post('progressao'),
+	    		'variacao_sazonal'  => $this->input->post('variacao_sazonal'),
+	    		'tratamento'  => $this->input->post('tratamento'),
+	    		'ambiente'  => $this->input->post('ambiente'),
+	    		'contactantes'  => $this->input->post('contactantes'),
+	    		'diagnostico'  => $this->input->post('diagnostico'),
+	    		'data_exame'  => date('Y-m-d H:i:s'),
+	    		'ectoparasitos' => $this->input->post('ectoparasitos'),
+	    		'caminho' => base_url().'uploads/'.$this->input->post('id_consulta')
+	    	);
+
+	    	$this->ExameModel->insert_dermatologico($data_exame);
+	    	redirect('consulta');
+	    }
+	    $id = 1;
+		$dados['consultas'] = $this->ExameModel->get_consulta_id($id);
+   		$this->load->view('dermatologico', $dados);
+	} 
+
+	public function do_upload()
 	{
-		$this->form_validation->set_rules('ureia_serica', 'UREIA SERICA', 'required|is_numeric');
-		$this->form_validation->set_rules('creatina_serica', 'CREATINA SERICA', 'required|is_numeric');
-		$this->form_validation->set_rules('alt_tpg', 'ALT/TPG', 'required|is_numeric');
-		$this->form_validation->set_rules('ast_tgo', 'AST/TGO', 'required|is_numeric');
-		$this->form_validation->set_rules('fostofase_alcalina', 'FOTOSFASE ALCALINA', 'required|is_numeric');
-		$this->form_validation->set_rules('lipase', 'LIPASE', 'required|is_numeric');
-		$this->form_validation->set_rules('amilase', 'AMILASE', 'required|is_numeric');
-		$this->form_validation->set_rules('glicose', 'GLICOSE', 'required|is_numeric');
-		$this->form_validation->set_rules('colesterol_total', 'COLESTEROL TOTAL', 'required|is_numeric');
-		$this->form_validation->set_rules('triglicerideos', 'TRIGLICERIDEOS', 'required|is_numeric');
-		$this->form_validation->set_rules('albumina', 'ALBUMINA', 'required|is_numeric');
-		$this->form_validation->set_rules('bilirrubina_total', 'BILIRRUBINA TOTAL', 'required|is_numeric');
-		$this->form_validation->set_rules('bilirrubina_direta', 'BILIRRUBINA DIRETA', 'required|is_numeric');
-		$this->form_validation->set_rules('bilirrubina_indireta', 'BILIRRUBINA INDIRETA', 'required|is_numeric');
-		$this->form_validation->set_rules('gama_gt', 'GAMA GT', 'required|is_numeric');
-		$this->form_validation->set_rules('calcio', 'CALCIO', 'required|is_numeric');
-		$this->form_validation->set_rules('fosforo', 'FOSFORO', 'required|is_numeric');
-		$this->form_validation->set_rules('potassio', 'POTASSIO', 'required|is_numeric');
-		$this->form_validation->set_rules('outros', 'OUTROS', 'required');
-		$this->form_validation->set_rules('caracteristica', 'CARACTERISTICA', 'required');
-		$this->form_validation->set_rules('teste', 'TESTE', 'required');
-		
-//		$this->form_validation->set_rules('data_exame', 'UREIA SERICA', 'required');
-        if($this->form_validation->run() == TRUE):
-        	$data_exame = array(
-        		'id_consulta' => $this->input->post('id_consulta'),
-        		'ureia_serica' => $this->input->post('ureia_serica'),
-        		'creatina_serica' => $this->input->post('creatina_serica'),
-        		'alt_tpg' => $this->input->post('alt_tpg'),
-        		'ast_tgo' => $this->input->post('ast_tgo'),
-        		'fostofase_alcalina' => $this->input->post('fostofase_alcalina'),
-        		'lipase' => $this->input->post('lipase'),
-        		'amilase' => $this->input->post('amilase'),
-        		'glicose' => $this->input->post('glicose'),
-        		'colesterol_total' => $this->input->post('colesterol_total'),
-        		'triglicerideos' => $this->input->post('triglicerideos'),
-        		'albumina' => $this->input->post('albumina'),
-        		'bilirrubina_total' => $this->input->post('bilirrubina_total'),
-        		'bilirrubina_direta' => $this->input->post('bilirrubina_direta'),
-        		'bilirrubina_indireta' => $this->input->post('bilirrubina_indireta'),
-        		'gama_gt' => $this->input->post('gama_gt'),
-        		'calcio' => $this->input->post('calcio'),
-        		'fosforo'  => $this->input->post('fosforo'),
-        		'potassio' => $this->input->post('potassio'),
-        		'outros' => $this->input->post('outros'),
-        		'caracteristica' => $this->input->post('caracteristica'),
-        		'teste' => $this->input->post('teste')
-        	);
-
-	        $this->ExameModel->insert_dermatologico($data_exame);
-			$this->ExameModel->update_consulta($this->input->post('id_consulta'));
-			redirect('exame');
-        
-        endif;
-        
-        $id = $this->uri->segment(3);
-        $dados['consultas'] = $this->ExameModel->get_consulta_id($id);
-  		$this->load->view('dermatologico',$dados);
+		$config['upload_path'] = './uploads/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size']	= '100';
+		$config['max_width']  = '1024';
+		$config['max_height']  = '768';
+		$file_name = $this->input->post('id_consulta');
+		$config['file_name']  = $file_name;
+		$this->load->library('upload', $config);
 	}
-
 }

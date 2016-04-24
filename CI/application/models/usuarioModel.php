@@ -45,7 +45,6 @@
 			
 		}
 
-		//Fazer depois
 	    public function search_usuario($pesquisa)
 	    {
 

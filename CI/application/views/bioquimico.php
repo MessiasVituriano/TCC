@@ -10,7 +10,7 @@ $this->load->view('includes/nav.php');
         <h4 class = "center-align">Bioquimico</h4>
       </div>
 
-<?php echo form_open('exame/bioquimico'); ?>
+<?php echo form_open('exame/bioquimico/'.$this->uri->segment(3)); ?>
 <?php foreach ($consultas as $consulta) : ?>
   <div class="row">
     <div class="input-field col s4">

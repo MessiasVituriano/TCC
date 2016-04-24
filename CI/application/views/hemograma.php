@@ -11,7 +11,7 @@ $this->load->view('includes/nav.php');
       </div>
 
 
-<?php echo form_open('exame/hemograma'); ?>
+<?php echo form_open('exame/hemograma/'.$this->uri->segment(3)); ?>
   
 <?php foreach ($consultas as $consulta) : ?>
   <div class="row">

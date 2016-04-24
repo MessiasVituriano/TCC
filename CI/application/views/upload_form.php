@@ -25,7 +25,7 @@ $this->load->view('includes/header.php');
       <div class="col m10 offset-m1 s12">
         <h4 class = "center-align">Dermatologico</h4>
       </div>
-<?php echo form_open_multipart('exame/dermatologico');?>
+<?php echo form_open_multipart('upload/register');?>
 
 <?php foreach ($consultas as $consulta) : ?>
       <div class="row">

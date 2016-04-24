@@ -10,7 +10,7 @@
           <h4 class = "center-align">Urinalise</h4>
         </div>
 
-        <?php echo form_open('exame/urinalise'); ?>
+        <?php echo form_open('exame/urinalise/'.$this->uri->segment(3)); ?>
 
         <?php foreach ($consultas as $consulta) : ?>
         <div class="row">
