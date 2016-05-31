@@ -2,7 +2,6 @@
 $this->load->view('includes/header.php');
 $this->load->view('includes/nav.php');
 ?>
-<?php $id = $this->uri->segment(3);?>
 
 <div class="container">
     <div class="row z-depth-2">

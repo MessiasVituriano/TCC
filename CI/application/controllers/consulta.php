@@ -11,15 +11,12 @@ class Consulta extends CI_Controller {
       $this->load->library('form_validation');    
       $this->load->library('session');
 
-
-        if(!$this->session->userdata('logado')){
-          redirect('login');
+        if($this->session->userdata('tipo') != 'V'){
+            redirect('login');
         }
-        
     }
 
-    public function index()
-    {   
+    public function index(){  
         $dados['consultas'] = $this->consultaModel->get_consulta();
         $this->load->view('consulta', $dados);
     }
@@ -27,10 +24,7 @@ class Consulta extends CI_Controller {
     public function pesquisa()
     {
         $this->form_validation->set_rules('pesquisa','PESQUISA','required');
-        
-
         $pesquisa = $this->input->post('pesquisa');
-
         $dados['consultas'] = $this->consultaModel->search_consulta($pesquisa);
         $this->load->view('consulta', $dados);
     }
@@ -85,9 +79,9 @@ class Consulta extends CI_Controller {
                                         'bioquimico','urinalise','cavitario','hemograma','diagnostico','terapia_real','terapia_pres'),$this->input->post());
 
         $this->consultaModel->cadastrar($data_prop, $data_animal,$data_consulta);
+            redirect('consulta');
         endif;
 
-        $this->load->view('cadastroConsulta');
-  
+        $this->load->view('cadastroConsulta');  
     }    
 }

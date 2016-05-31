@@ -10,11 +10,6 @@ class Usuario extends CI_Controller{
     $this->load->library('form_validation');
     $this->load->library('session');
 
-    echo "".$this->session->userdata('tipo');
-
-/*    if(!$this->session->userdata('logado')){
-      redirect('login');
-    }*/
   }
 
   public function index(){ 
@@ -24,7 +19,7 @@ class Usuario extends CI_Controller{
 
   public function update_usuario()
   {
-    $this->form_validation->set_rules('nome_usuario', 'NOME USUÁRIO', 'required');
+    $this->form_validation->set_rules('nome_usuario', 'NOME USUÁRIO', 'required|min_length[4]');
     $this->form_validation->set_rules('tipo', 'TIPO', 'required');
     $this->form_validation->set_rules('senha', 'SENHA', 'required');
 
@@ -67,11 +62,8 @@ class Usuario extends CI_Controller{
       'complemento'    => $this->input->post('complemento')
       );    
 
-
     $this->UsuarioModel->update_usuario( $id, $data_usuario, $data_contato, $data_endereco);
-
     redirect('usuario');
-
     endif;
 
     $id = $this->uri->segment(3);
@@ -84,7 +76,7 @@ class Usuario extends CI_Controller{
 
   public function cadastro(){
 
-    $this->form_validation->set_rules('nome_usuario', 'NOME USUÁRIO', 'required|is_unique[usuario.nome_usuario]');
+    $this->form_validation->set_rules('nome_usuario', 'NOME USUÁRIO', 'required|is_unique[usuario.nome_usuario]|min_length[4]');
     $this->form_validation->set_rules('nome_completo', 'NOME COMPLETO', 'required');
     $this->form_validation->set_rules('tipo', 'TIPO', 'required');
     $this->form_validation->set_rules('senha', 'SENHA', 'required');
@@ -176,6 +168,7 @@ class Usuario extends CI_Controller{
 
       if($usuario){
         $dados = array(
+          'id' => $usuario[0]->id,
           'nome_completo' => $usuario[0]->nome_completo,
           'nome_usuario' => $usuario[0]->nome_usuario,
           'tipo' => $usuario[0]->tipo,
@@ -195,15 +188,15 @@ class Usuario extends CI_Controller{
           redirect('exame');
           break;
           case 'S':
-          redirect('consulta');
+          redirect('validar');
           break;
           default:
           $this->load->view('login');
           break;
         }
+      }else{
+        $this->load->view('login');
       }
-    }else{
-      $this->load->view('login');
     }
   }
 

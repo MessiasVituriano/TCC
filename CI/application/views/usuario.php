@@ -1,24 +1,7 @@
 <?php
 $this->load->view('includes/header.php');
+$this->load->view('includes/nav.php');
 ?>
-
-  <div class = "navbar-fixed">  
-  <nav>
-  <div class="nav-wrapper blue" >
-      <a href="#" class="brand-logo center"><img src="<?php echo base_url().'img/logo.jpg'; ?>" alt="Mako"></a>
-      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><?php if(isset($mensagem)) echo  'Bem vindo:  '.$mensagem." "; ?></li>
-          <li><a href=<?php echo base_url().'usuario/logout/'?>>Sair</a></li>
-      </ul>
-      <ul class="side-nav" id="mobile-demo">
-          <li><?php if(isset($mensagem)) echo  'Bem vindo:  '.$mensagem." "; ?></li>
-          <li><a href=<?php echo base_url().'usuario/logout/'?>>Sair</a></li>
-      </ul>
-    </div>
-  </nav>
-  </div>
-
   <div class="container">
       <div class="row z-depth-2">
         <div class="col m10 offset-m1 s12">
@@ -36,7 +19,7 @@ $this->load->view('includes/header.php');
           </div>        
         </div>
         <?php echo form_close(); ?>
-
+        
         <table class = "striped responsive-table centered">
         <thead>
           <tr>

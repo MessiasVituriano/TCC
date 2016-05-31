@@ -2,7 +2,6 @@
 $this->load->view('includes/header.php');
 $this->load->view('includes/nav.php');
 ?>
-<?php $id = $this->uri->segment(3);?>
 
 <div class="container">
     <div class="row z-depth-2">
@@ -14,73 +13,69 @@ $this->load->view('includes/nav.php');
     <?php foreach ($usuarios as $usuario) : ?>
 	
 	<div class="row">
-		<div class="input-field col s12">
+		<div class="input-field col s8">
 			<label for = "nome_usuario">Nome Usuário</label>
-			<?php echo form_input('nome_usuario', $usuario->nome_usuario, 'class = "validate" disabled') ?>
+			<?php echo form_input('nome_usuario', $usuario->nome_usuario, 'class = "validate" class="validate" disabled') ?>
 		</div>
-	</div>
-
-      <div class="row">
         <div class="input-field col s4">
-            <input name = "tipo" type="radio" id="V" value = "V" <?php if ($usuario->tipo == 'V') echo "checked" ?> />
-            <label for="V">Veterin&aacute;rio</label>
-        </div>
-        <div class="input-field col s4">
-            <input name = "tipo" type="radio" id="T" value = "T" <?php if ($usuario->tipo == 'T') echo "checked" ?>/>
-            <label for="T">T&eacute;cnico</label>
-        </div>
-        <div class="input-field col s4">
-            <input name = "tipo" type="radio" id="S" value = "S" <?php if ($usuario->tipo == 'S') echo "checked" ?>/>
-            <label for="S">Supervisor</label>
+            <label for="tipo">Tipo</label>
+            <?php if ($usuario->tipo == 'V'){ 
+            	echo form_input('tipo', 'Veterinario', 'class="validate" disabled');
+            	}else if ($usuario->tipo == 'S') {
+	            	echo form_input('tipo', 'Supervisor', 'class="validate" disabled');
+            	}else{
+	            	echo form_input('tipo', 'Tecnico', 'class="validate" disabled');
+            	}
+            ?> 
         </div>      
-    </div>
+	</div>
 
 	<div class="row">
 		<div class="input-field col s4">
 			<label for = "telefone">Telefone</label>
-			<?php echo form_error('telefone'); ?>
+			<?php echo form_input('telefone', $usuario->telefone, 'class="validate" disabled'); ?>
 		</div>
 		<div class="input-field col s4">
 			<label for = "celular">Celular</label>
-			<?php echo form_input('celular', $usuario->celular, ' disabled') ?>
+			<?php echo form_input('celular', $usuario->celular, ' class="validate" disabled') ?>
 		</div>
 		<div class="input-field col s4">
 			<label for = "email">E-mail</label>
-			<?php echo form_input('email', $usuario->email, ' disabled') ?>
+			<?php echo form_input('email', $usuario->email, ' class="validate" disabled') ?>
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="input-field col s4">
 			<label for = "logradouro">Logradouro</label>
-			<?php echo form_input('logradouro', $usuario->logradouro, ' disabled') ?>
+			<?php echo form_input('logradouro', $usuario->logradouro, ' class="validate" disabled') ?>
 		</div>
 		<div class="input-field col s4">
 			<label for = "numero">Numero</label>
-			<?php echo form_input('numero', $usuario->numero, ' disabled') ?>
+			<?php echo form_input('numero', $usuario->numero, ' class="validate" disabled') ?>
 		</div>
 		<div class="input-field col s4">
 			<label for = "bairro">Bairro</label>
-			<?php echo form_input('bairro', $usuario->bairro, ' disabled') ?>
+			<?php echo form_input('bairro', $usuario->bairro, ' class="validate" disabled') ?>
 		</div>
 	</div>
 
 	<div class="row">
 		<div class="input-field col s4">
 			<label for = "cidade">Cidade</label>
-			<?php echo form_input('cidade', $usuario->cidade, ' disabled') ?>
+			<?php echo form_input('cidade', $usuario->cidade, ' class="validate" disabled') ?>
 		</div>
 		<div class="input-field col s2">
 			<label for = "estado">Estado</label>
-			<?php echo form_input('estado', $usuario->estado, ' disabled') ?>
+			<?php echo form_input('estado', $usuario->estado, ' class="validate" disabled') ?>
 		</div>
 		<div class="input-field col s2">
 			<label for = "cep">CEP</label>
-			<?php echo form_input('cep', $usuario->cep, ' disabled') ?>
+			<?php echo form_input('cep', $usuario->cep, ' class="validate" disabled') ?>
 		</div>
 		<div class="input-field col s4">
 			<label for = "complemento">Complemento</label>
-			<?php echo form_input('complemento', $usuario->complemento, ' disabled') ?>
+			<?php echo form_input('complemento', $usuario->complemento, ' class="validate" disabled') ?>
 		</div>
 	</div>
 

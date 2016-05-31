@@ -1,22 +1,7 @@
 <?php
 $this->load->view('includes/header.php');
+$this->load->view('includes/nav.php');
 ?>
-  <div class = "navbar-fixed">  
-  <nav>
-  <div class="nav-wrapper blue" >
-      <a href="#" class="brand-logo center">Logo</a>
-      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><?php if(isset($mensagem)) echo  'Bem vindo:  '.$mensagem." "; ?></li>
-          <li><a href=<?php echo base_url().'usuario/logout/'?>>Sair</a></li>
-      </ul>
-      <ul class="side-nav" id="mobile-demo">
-          <li><?php if(isset($mensagem)) echo  'Bem vindo:  '.$mensagem." "; ?></li>
-          <li><a href=<?php echo base_url().'usuario/logout/'?>>Sair</a></li>
-      </ul>
-    </div>
-  </nav>
-  </div>
   
   <div class="container">
       <div class="row z-depth-2">
@@ -318,6 +303,12 @@ $this->load->view('includes/header.php');
         <div class="input-field col s3">
           <input type="checkbox" id="bioquimico" name = "bioquimico" value = "S"/>
           <label for = "bioquimico">Bioquimico</label>  
+        </div>
+      </div>
+      <div class = "row">
+        <div class="input-field col s3">
+          <input type="checkbox" id="dermatologico" name = "dermatologico" value = "S"/>
+          <label for = "dermatologico">Dermatologico</label>  
         </div>
       </div>
       <div class = "row">

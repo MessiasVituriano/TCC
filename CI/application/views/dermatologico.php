@@ -1,23 +1,7 @@
 <?php
 $this->load->view('includes/header.php');
+$this->load->view('includes/nav.php');
 ?>
-
-  <div class = "navbar-fixed">  
-  <nav>
-  <div class="nav-wrapper blue" >
-      <a href="#" class="brand-logo center">Logo</a>
-      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><?php if(isset($mensagem)) echo  'Bem vindo:  '.$mensagem." "; ?></li>
-          <li><a href=<?php echo base_url().'usuario/logout/'?>>Sair</a></li>
-      </ul>
-      <ul class="side-nav" id="mobile-demo">
-          <li><?php if(isset($mensagem)) echo  'Bem vindo:  '.$mensagem." "; ?></li>
-          <li><a href=<?php echo base_url().'usuario/logout/'?>>Sair</a></li>
-      </ul>
-    </div>
-  </nav>
-  </div>
 
 <div class="container">
   <div class="row z-depth-2">
@@ -25,7 +9,7 @@ $this->load->view('includes/header.php');
       <div class="col m10 offset-m1 s12">
         <h4 class = "center-align">Dermatologico</h4>
       </div>
-<?php echo form_open_multipart('exame/dermatologico');?>
+<?php echo form_open_multipart('exame/dermatologico/'.$this->uri->segment(3));?>
 
 <?php foreach ($consultas as $consulta) : ?>
       <div class="row">
@@ -147,7 +131,7 @@ $this->load->view('includes/header.php');
     <div class="file-field input-field">
       <div class="btn">
         <span>Imagem</span>
-        <input type="file" name="userfile" >
+        <input type="file" name="userfile" id = 'userfile' >
       </div>
       <div class="file-path-wrapper">
         <input class="file-path validate" type="text">

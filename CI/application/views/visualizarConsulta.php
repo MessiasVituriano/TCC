@@ -1,26 +1,8 @@
 <?php
 $this->load->view('includes/header.php');
+$this->load->view('includes/nav.php');
 ?>
-  <div class = "navbar-fixed">  
-  <nav>
-  <div class="nav-wrapper blue" >
-      <a href="#" class="brand-logo center">Logo</a>
-      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><?php if(isset($mensagem)) echo  'Bem vindo:  '.$mensagem." "; ?></li>
-          <li><a href=<?php echo base_url().'usuario/logout/'?>>Sair</a></li>
-      </ul>
-      <ul class="side-nav" id="mobile-demo">
-          <li><?php if(isset($mensagem)) echo  'Bem vindo:  '.$mensagem." "; ?></li>
-          <li><a href=<?php echo base_url().'usuario/logout/'?>>Sair</a></li>
-      </ul>
-    </div>
-  </nav>
-  </div>
   
-  <?php foreach ($consultas as $consulta): ?>
-
-
   <div class="container">
       <div class="row z-depth-2">
         <div class="col m10 offset-m1 s12">
@@ -31,6 +13,7 @@ $this->load->view('includes/header.php');
         <h4 class = "center-align"> Identifi&ccedil;&atilde;o do animal</h4>
       </div>
 
+  <?php foreach ($consultas as $consulta): ?>
       <div class="row">
         <div class="input-field col s2">
           <label for = "id_consulta">ID consulta</label>

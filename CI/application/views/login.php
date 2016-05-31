@@ -1,7 +1,11 @@
 <?php
 $this->load->view('includes/header.php');
-$this->load->view('includes/nav.php');
 ?>
+<div class="parallax-container">
+  <div class="parallax">
+    <img src="<?php echo base_url();?>img/veterinaria.jpg">
+  </div>
+</div>
 <div class="container">
   <div class="row z-depth-2">
     <div class="col m10 offset-m1 s12">
@@ -35,4 +39,10 @@ $this->load->view('includes/nav.php');
   </div>
 </div>
 </div>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.parallax').parallax();
+    });
+  </script>
+
 <?php $this->load->view('includes/footer'); ?>

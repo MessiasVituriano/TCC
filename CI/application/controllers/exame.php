@@ -10,20 +10,21 @@ class Exame extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->library('session');
 
-    if(!$this->session->userdata('logado')){
-      redirect('login');
-    }
-
+    	if($this->session->userdata('tipo') != 'T'){
+			redirect('login');
+		}
     }
 
     public function index(){ 
-    	$dados['consultas'] = $this->ExameModel->get_consulta();
-    	$this->load->view('exame', $dados);
+		$dados['cavitarios'] = $this->ExameModel->get_consulta_cavitario();
+        $dados['hemogramas'] = $this->ExameModel->get_consulta_hemograma();
+        $dados['urinalises'] = $this->ExameModel->get_consulta_urinalise();
+        $dados['bioquimicos'] = $this->ExameModel->get_consulta_bioquimico();
+        $this->load->view('exame', $dados);
     }
 
 	public function cavitario()
 	{
-
 		$this->form_validation->set_rules('volume', 'VOLUME', 'required|is_numeric');
 		$this->form_validation->set_rules('cor', 'COR', 'required');
 		$this->form_validation->set_rules('densidade', 'DENSIDADE', 'required|is_numeric');
@@ -61,13 +62,13 @@ class Exame extends CI_Controller {
 			'sais_biliares' => $this->input->post('sais_biliares'),
 			'hemacias' => $this->input->post('hemacias'),
 			'celulas_nucleadas' => $this->input->post('celulas_nucleadas'),
-			'citologia' => $this->input->post('citologia')
+			'citologia' => $this->input->post('citologia'),
+       		'data_exame' => date("Y-m-d"),
+        	'status' => 'R'
 		);
 
-
-
 		$this->ExameModel->insert_cavitario($data_exame);
-		$this->ExameModel->update_consulta($this->input->post('id_consulta'));
+		$this->ExameModel->update_consulta($this->input->post('id_consulta'),'cavitario');
 		redirect('exame');
 		endif;
 
@@ -123,11 +124,13 @@ class Exame extends CI_Controller {
         		'potassio' => $this->input->post('potassio'),
         		'outros' => $this->input->post('outros'),
         		'caracteristica' => $this->input->post('caracteristica'),
-        		'teste' => $this->input->post('teste')
-        	);
+        		'teste' => $this->input->post('teste'),
+        		'data_exame' => date("Y-m-d"),
+        	    'status' => 'R'
+				);
 
 	        $this->ExameModel->insert_bioquimico($data_exame);
-			$this->ExameModel->update_consulta($this->input->post('id_consulta'));
+			$this->ExameModel->update_consulta($this->input->post('id_consulta'),'bioquimico');
 			redirect('exame');
         
         endif;
@@ -150,7 +153,7 @@ class Exame extends CI_Controller {
 		$this->form_validation->set_rules('glicose', 'GLICOSE','required');
 		$this->form_validation->set_rules('corpos_cetonicos', 'CORPOS CETONICOS','required');
 		$this->form_validation->set_rules('sangue_oculto', 'SANGUE OCULTO','required');
-		$this->form_validation->set_rules('billirubina', 'BILIRRUBINA','required');
+		$this->form_validation->set_rules('bilirrubina', 'BILIRRUBINA','required');
 		$this->form_validation->set_rules('urobilinogenio', 'UROBILINOGENIO','required|is_numeric');
 		$this->form_validation->set_rules('hemacias', 'HEMACIAS','required|is_numeric');
 		$this->form_validation->set_rules('leocitos', 'LEOCITOS','required|is_numeric');
@@ -199,18 +202,19 @@ class Exame extends CI_Controller {
 			'cilindros_mistos' => $this->input->post('cilindros_mistos'),
 			'cristais' => $this->input->post('cristais'),
 			'outros' => $this->input->post('outros'),
-			'observacoes' => $this->input->post('observacoes')
+			'observacoes' => $this->input->post('observacoes'),
+       		'data_exame' => date("Y-m-d"),
+			'status' => 'R'
 		);
 		
 	        $this->ExameModel->insert_urinalise($data_exame);
-			$this->ExameModel->update_consulta($this->input->post('id_consulta'));
+			$this->ExameModel->update_consulta($this->input->post('id_consulta'), 'urinalise');
 			redirect('exame');
-
-		endif;
-        
-        $id = $this->uri->segment(3);
-        $dados['consultas'] = $this->ExameModel->get_consulta_id($id);
-  		$this->load->view('urinalise',$dados);
+        	endif;
+        	
+		$id = $this->uri->segment(3);
+		$dados['consultas'] = $this->ExameModel->get_consulta_id($id);
+   		$this->load->view('urinalise', $dados);
 	}
 
 	public function hemograma()
@@ -276,10 +280,12 @@ class Exame extends CI_Controller {
         		'metamielocitos_relativo' => $this->input->post('metamielocitos_relativo'),
         		'plaquetas' => $this->input->post('plaquetas'),
         		'observacoes' => $this->input->post('observacoes'),
+         		'data_exame' => date("Y-m-d"),
+	       		'status' => 'R'
         		);
 
 	        $this->ExameModel->insert_hemograma($data_exame);
-			$this->ExameModel->update_consulta($this->input->post('id_consulta'));
+			$this->ExameModel->update_consulta($this->input->post('id_consulta'), 'hemograma');
 			redirect('exame');
         	endif;
         	
@@ -303,6 +309,7 @@ public function dermatologico(){
       	$this->form_validation->set_rules('userfile', 'IMAGEM', 'callback_do_upload');
 	    
 	    if($this->form_validation->run() == TRUE){
+	    	  $imageData = file_get_contents($_FILES["userfile"]["tmp_name"]);
 	    	$data_exame = array(
 	    		'id_consulta' => $this->input->post('id_consulta'),
 	    		'data_inicio' => $this->input->post('data_inicio'), 
@@ -316,11 +323,10 @@ public function dermatologico(){
 	    		'diagnostico'  => $this->input->post('diagnostico'),
 	    		'data_exame'  => date('Y-m-d H:i:s'),
 	    		'ectoparasitos' => $this->input->post('ectoparasitos'),
-	    		'caminho' => base_url().'uploads/'.$this->input->post('id_consulta')
+	    		'imagem' => $imageData
 	    	);
-
 	    	$this->ExameModel->insert_dermatologico($data_exame);
-	    	redirect('consulta');
+	    	redirect('exame');
 	    }
 	    $id = 1;
 		$dados['consultas'] = $this->ExameModel->get_consulta_id($id);
@@ -329,13 +335,41 @@ public function dermatologico(){
 
 	public function do_upload()
 	{
-		$config['upload_path'] = './uploads/';
-		$config['allowed_types'] = 'gif|jpg|png';
-		$config['max_size']	= '100';
-		$config['max_width']  = '1024';
-		$config['max_height']  = '768';
-		$file_name = $this->input->post('id_consulta');
-		$config['file_name']  = $file_name;
+		$config['allowed_types'] = 'png|jpeg|gif';
 		$this->load->library('upload', $config);
+	}
+
+	public function visualizarDermatologico()
+	{
+		$dados['exames'] = $this->ExameModel->get_dermatologico(13);
+   		$this->load->view('visualizarDermatologico', $dados);
+	}
+
+	public function visualizarUrinalise()
+	{
+		$id = $this->uri->segment(3);
+		$dados['exames'] = $this->ExameModel->get_exame_urinalise_id($id);
+   		$this->load->view('visualizarUrinalise', $dados);
+	}
+	
+	public function visualizarCavitario()
+	{
+		$id = $this->uri->segment(3);
+		$dados['exames'] = $this->ExameModel->get_exame_cavitario_id($id);
+   		$this->load->view('visualizarCavitario', $dados);
+	}
+	
+	public function visualizarBioquimico()
+	{
+		$id = $this->uri->segment(3);
+		$dados['exames'] = $this->ExameModel->get_exame_bioquimico_id($id);
+   		$this->load->view('visualizarBioquimico', $dados);
+	}
+
+	public function visualizarHemograma()
+	{    
+		$id = $this->uri->segment(3);
+		$dados['exames'] = $this->ExameModel->get_exame_hemograma_id($id);
+   		$this->load->view('visualizarHemograma', $dados);
 	}
 }

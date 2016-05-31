@@ -27,9 +27,8 @@
             <?php if($consulta->especie == 'G'){
               echo form_input('especie', 'Gato', 'class = "validate" disabled');
             }else 
-            if ($consulta->especie == 'C') {
               echo form_input('especie', 'Cachorro', 'class = "validate" disabled');
-            }?>
+            ?>
           </div>
           <?php echo form_hidden('id_consulta', $consulta->id_consulta) ?>
         </div>
@@ -165,17 +164,6 @@
       <?php echo form_error('proteinas'); ?>
     </div>
     <div class="input-field col s3">
-      <select name = 'cetonas'>
-        <option value="" disabled selected>Cetonas</option>
-        <option value="-">-</option>
-        <option value="+">+</option>
-        <option value="++">++</option>
-        <option value="+++">+++</option>
-        <option value="++++">++++</option>
-      </select>
-      <?php echo form_error('cetonas'); ?>
-    </div>
-    <div class="input-field col s3">
       <select name = 'bilirrubina'>
         <option value="" disabled selected>Bilirrubina</option>
         <option value="-">-</option>
@@ -193,12 +181,12 @@
       <label for="sangue_oculto">Sangue oculto</label>
     </div>
     <div class="input-field col s4">
-      <input name = "sangue_oculto" type="radio" id="N" value = "Negativo"/>
+      <input name = "sangue_oculto" type="radio" id="N" value = "N"/>
       <label for="N">Negativo</label>
     </div>
     <div class="input-field col s4">
-      <input name = "sangue_oculto" type="radio" id="P" value = "Negativo"/>
-      <label for="P">Positivo</label>
+      <input name = "sangue_oculto" type="radio" id="R" value = "R"/>
+      <label for="R">Positivo</label>
     </div>
     <?php echo form_error('sangue_oculto'); ?>
   </div>
@@ -216,9 +204,9 @@
       <?php echo form_error('urobilinogenio'); ?>
     </div>
     <div class="input-field col s4"> 
-      <label for = 'leocitos'>Leocitos (cél/cp 400x)</label>
-      <?php echo form_input('leocitos') ?> 
-      <?php echo form_error('leocitos'); ?>
+      <label for = 'leucocitos'>Leucocitos (cél/cp 400x)</label>
+      <?php echo form_input('leucocitos') ?> 
+      <?php echo form_error('leucocitos'); ?>
     </div>
   </div>
 
@@ -318,7 +306,7 @@
 
     <div class = "row">
      <div class = "center-align col s12">
-      <button class="btn waves-effect waves-light" type="submit">Realizar exame cavit&aacute;rio
+      <button class="btn waves-effect waves-light" type="submit">Realizar exame urinalise
         <i class="material-icons">done</i>
       </button>
     </div>
