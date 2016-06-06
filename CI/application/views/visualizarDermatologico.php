@@ -17,7 +17,7 @@ $this->load->view('includes/nav.php');
           <?php echo form_input('nomeAnimal', $exame->nomeAnimal, 'class = "validate" disabled'); ?>
         </div>
         <div class="input-field col s4">
-          <label for = "especie">Especie</label>
+          <label for = "especie">Esp&eacute;cie</label>
           <?php if($exame->especie == 'G'){
             echo form_input('especie', 'Gato', 'class = "validate" disabled');
           }else 
@@ -27,7 +27,7 @@ $this->load->view('includes/nav.php');
         </div>
         <div class = "row">
           <div class="input-field col s4">      
-            <label for = 'data_exame'>Data: </label>
+            <label for = 'data_exame'>Data de realiza&ccedil;&atilde;o do exame </label>
                 <?php $data = strtotime($exame->data_exame); ?>
               <?php echo form_input('data_exame', date("d-m-Y",$data), 'disabled')?>
           </div>
@@ -36,7 +36,7 @@ $this->load->view('includes/nav.php');
 
     <div class="row">
       <div class="input-field col s6">  
-        <label for = 'data_inicio'>Data inicio</label>
+        <label for = 'data_inicio'>Data de in&iacute;cio </label>
         <?php echo form_input('data_inicio', $exame->data_inicio, 'class="validate" disabled') ?>
       </div>
       <div class="input-field col s6">  
@@ -67,13 +67,15 @@ $this->load->view('includes/nav.php');
       </div>
     </div>
 
+    <?php if(isset($exame->ectoparasitos)){ ?>
     <div class="row">
       <div class="input-field col s12">
         <label for = "ect">Ectoparasitos</label>
         <?php echo form_input('ect', $exame->ectoparasitos, 'class = "validate" disabled') ?>        
       </div>
     </div>
-
+    <?php } ?>
+    
     <div class="row">
       <div class="input-field col s12">
         <label for="ambiente">Ambiente</label>        
@@ -103,10 +105,20 @@ $this->load->view('includes/nav.php');
         <?php echo form_textarea('diagnostico', $exame->diagnostico, 'class = "materialize-textarea" disabled') ?>
       </div>
     </div>
+    
+    <?php  echo '<img class="responsive-img" src="data:image/jpeg;base64,'.base64_encode( $exame->imagem ).'"/>';?>
 
-          <?php  echo '<img class="responsive-img" src="data:image/jpeg;base64,'.base64_encode( $exame->imagem ).'"/>';?>
-        <?php endforeach; ?>
- 
+    <?php endforeach; ?>
+   <?php echo form_open('consulta/visualizarDermatologico/'.$this->uri->segment(3)); ?>
+    <div class = "row">
+      <div class = "center-align col s12">
+        <button class="red btn waves-effect waves-light" name = "salvarPDF" value = "sim">PDF
+        <i class="material-icons red">file_download</i>
+        </button>
+      </div>
+    </div>
+  <?php echo form_close(); ?>
+
       </div>
     </div>
 </div>
@@ -123,4 +135,3 @@ document.getElementById('ect').onchange = function() {
   document.getElementById('ectoparasitos').disabled = !this.checked;
 };
 </script>
-s

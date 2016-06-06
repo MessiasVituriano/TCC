@@ -9,7 +9,7 @@ $this->load->view('includes/nav.php');
       <div class="col m10 offset-m1 s12">
         <h4 class = "center-align">Dermatologico</h4>
       </div>
-<?php echo form_open_multipart('exame/dermatologico/'.$this->uri->segment(3));?>
+<?php echo form_open_multipart('consulta/dermatologico/'.$this->uri->segment(3));?>
 
 <?php foreach ($consultas as $consulta) : ?>
       <div class="row">

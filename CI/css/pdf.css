@@ -1,0 +1,44 @@
+*{
+  padding: 0;
+  background:#DDDDDD;
+  font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+body{
+  font: 14px/1.4 "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: arial, helvetica, sans-serif;
+	font-size: 12px;
+}
+
+div{
+  text-align:center;
+  float:left;
+}
+
+h1,h2,h3,h4,h5,h6{
+  font-size: 14px;
+  background-color:lightgrey;
+}
+
+label{
+  border-radius: 5px;
+  margin: 0;
+  text-align:center;
+}
+
+input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+}
+
+textarea {
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none;
+}

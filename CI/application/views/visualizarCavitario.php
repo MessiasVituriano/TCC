@@ -128,6 +128,16 @@ $this->load->view('includes/nav.php');
 </div>
 <?php endforeach; ?>
 
+  <?php echo form_open('consulta/visualizarCavitario/'.$this->uri->segment(3)); ?>
+    <div class = "row">
+      <div class = "center-align col s12">
+        <button class="red btn waves-effect waves-light" name = "salvarPDF" value = "sim">PDF
+        <i class="material-icons red">file_download</i>
+        </button>
+      </div>
+    </div>
+<?php echo form_close(); ?>
+
     </div>
   </div>
 </div>

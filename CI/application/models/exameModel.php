@@ -80,6 +80,7 @@ class ExameModel extends CI_Model{
         $query = $this->db->get();
         return $query->result();
     }    
+
     public function get_consulta_id($id){
 			$this->db->select("consulta.*, proprietario.*, animal.*");
 			$this->db->from('consulta');

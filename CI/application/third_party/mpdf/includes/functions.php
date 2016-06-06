@@ -74,7 +74,7 @@ function _fgets (&$h, $force=false) {
 if(!function_exists('str_ireplace')) {
   function str_ireplace($search,$replace,$subject) {
 	$search = preg_quote($search, "/");
-	return preg_replace("/".$search."/i", $replace, $subject); 
+	return preg_replace_callback("/".$search."/i", $replace, $subject, '0'); 
   }
 }
 if(!function_exists('htmlspecialchars_decode')) {
@@ -93,8 +93,8 @@ if(!function_exists('strcode2utf')){
   function strcode2utf($str,$lo=true) {
 	//converts all the &#nnn; and &#xhhh; in a string to Unicode
 	if ($lo) { $lo = 1; } else { $lo = 0; }
-	$str = preg_replace('/\&\#([0-9]+)\;/me', "code2utf('\\1',{$lo})",$str);
-	$str = preg_replace('/\&\#x([0-9a-fA-F]+)\;/me', "codeHex2utf('\\1',{$lo})",$str);
+	$str = preg_replace_callback('/\&\#([0-9]+)\;/m', function($m) use ($lo){return code2utf($m[1],$lo); }, $str);
+	$str = preg_replace_callback('/\&\#x([0-9a-fA-F]+)\;/m', function($m) use ($lo){return codeHex2utf($m[1],$lo);}, $str);
 	return $str;
   }
 }

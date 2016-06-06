@@ -341,7 +341,7 @@ public function dermatologico(){
 
 	public function visualizarDermatologico()
 	{
-		$dados['exames'] = $this->ExameModel->get_dermatologico(13);
+		$dados['exames'] = $this->ExameModel->get_dermatologico(18);
    		$this->load->view('visualizarDermatologico', $dados);
 	}
 
@@ -350,26 +350,81 @@ public function dermatologico(){
 		$id = $this->uri->segment(3);
 		$dados['exames'] = $this->ExameModel->get_exame_urinalise_id($id);
    		$this->load->view('visualizarUrinalise', $dados);
-	}
+   		
+   		if(isset($_POST["salvarPDF"])){
+   			if($_POST["salvarPDF"] == "sim"){
+				$id = $this->uri->segment(3);
+				$dados['exames'] = $this->ExameModel->get_exame_urinalise_id($id);
+		   		$this->PDF($this->load->view('visualizarUrinalise', $dados, true), "urinalise_ID_".$id);
+   			}
+   		}	}
 	
 	public function visualizarCavitario()
 	{
 		$id = $this->uri->segment(3);
 		$dados['exames'] = $this->ExameModel->get_exame_cavitario_id($id);
    		$this->load->view('visualizarCavitario', $dados);
+	
+   		if(isset($_POST["salvarPDF"])){
+   			if($_POST["salvarPDF"] == "sim"){
+				$id = $this->uri->segment(3);
+				$dados['exames'] = $this->ExameModel->get_exame_cavitario_id($id);
+		   		$this->PDF($this->load->view('visualizarCavitario', $dados, true), "cavitario_ID_".$id);
+   			}
+   		}
 	}
 	
 	public function visualizarBioquimico()
 	{
+
 		$id = $this->uri->segment(3);
 		$dados['exames'] = $this->ExameModel->get_exame_bioquimico_id($id);
    		$this->load->view('visualizarBioquimico', $dados);
+   		
+   		if(isset($_POST["salvarPDF"])){
+   			if($_POST["salvarPDF"] == "sim"){
+				$id = $this->uri->segment(3);
+				$dados['exames'] = $this->ExameModel->get_exame_bioquimico_id($id);
+		   		$this->PDF($this->load->view('visualizarBioquimico', $dados, true), "bioquimico_ID_".$id);
+   			}
+   		}
 	}
 
 	public function visualizarHemograma()
 	{    
+
 		$id = $this->uri->segment(3);
 		$dados['exames'] = $this->ExameModel->get_exame_hemograma_id($id);
    		$this->load->view('visualizarHemograma', $dados);
+   		
+   		if(isset($_POST["salvarPDF"])){
+   			if($_POST["salvarPDF"] == "sim"){
+				$id = $this->uri->segment(3);
+				$dados['exames'] = $this->ExameModel->get_exame_hemograma_id($id);
+		   		$this->PDF($this->load->view('visualizarHemograma', $dados, true), "hemograma_ID_".$id);
+   			}
+   		}
 	}
+
+	public function PDF($html, $filename)
+    { 
+        //this the the PDF filename that user will get to download
+        $pdfFilePath = $filename.".pdf";
+ 
+        //load mPDF library
+        $this->load->library('m_pdf');
+
+        //$stylesheetCSS = '<style>'.file_get_contents('css/materialize.min.css').'</style>';;
+        $stylesheetCSS = '<style>'.file_get_contents('css/pdf.css').'</style>';;
+                
+        $this->m_pdf->pdf->WriteHTML($stylesheetCSS);
+        //generate the PDF from the given html
+        $html1 = strip_tags($html, '<script><div><input><label><h1><h2><h3><h4><h5><h6>');
+
+        $this->m_pdf->pdf->WriteHTML($html1);
+ 
+        //download it.
+        $this->m_pdf->pdf->Output($pdfFilePath, "D");        
+    }
+
 }

@@ -6,7 +6,6 @@ $this->load->view('includes/nav.php');
   <div class="container">
       <div class="row z-depth-2">
         <div class="col m10 offset-m1 s12">
-        <h1 class="center-align">Formul&aacute;rio de inscri&ccedil;&atilde;o</h1>
       <div class="row">
       <div class="row">
       <div class="col m10 offset-m1 s12">
@@ -330,6 +329,16 @@ $this->load->view('includes/nav.php');
         </div>
       <?php endif; ?>
       </div>
+
+      <div class = "row">
+         <div class = "center-align col s3">
+        <?php if ($consulta->dermatologico == 'R'):?>
+            <a class="waves-effect waves-light btn" href=<?php echo base_url().'consulta/visualizarDermatologico/'.$consulta->id_consulta;?>>Dermatologico
+            </a>
+        <?php endif; ?>
+        </div>
+      </div>
+
       <?php endforeach; ?>
       </div>
     </div>
